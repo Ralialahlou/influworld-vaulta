@@ -867,7 +867,7 @@ nav a[aria-current="page"]::after{content:'';position:absolute;bottom:-4px;left:
         <h3 data-i18n="tok.h3">Comment fonctionnent les tokens ?</h3>
         <p data-i18n="tok.p1">Lorsqu'un créateur postule à votre offre, son profil reste masqué. Pour accéder à ses informations complètes — réseaux sociaux, statistiques, coordonnées — et le contacter, vous utilisez un token.</p>
         <p data-i18n="tok.p2">Vous gardez ainsi un contrôle total sur votre budget marketing et choisissez uniquement les profils qui vous correspondent.</p>
-        <a href="#/businesses" class="btn btn-primary" style="margin-top:8px" data-i18n="tok.cta">Voir les plans</a>
+        <a href="#/businesses" onclick="location.hash='#/businesses';setTimeout(function(){smoothScroll('#biz-tarifs')},200);return false;" class="btn btn-primary" style="margin-top:8px" data-i18n="tok.cta">Voir les plans</a>
       </div>
     </div>
   </section>
@@ -1248,7 +1248,7 @@ nav a[aria-current="page"]::after{content:'';position:absolute;bottom:-4px;left:
     </div>
   </section>
   <!-- PRICING -->
-  <section class="pricing-section">
+  <section class="pricing-section" id="biz-tarifs">
     <div class="sh">
       <h2 data-i18n-html="bprice.h2">Nos <span class="gt">tarifs</span></h2>
       <p data-i18n="bprice.p">Des plans transparents adaptés à tous les budgets. Pas d'engagement, résiliable à tout moment.</p>
