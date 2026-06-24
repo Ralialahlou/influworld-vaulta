@@ -49,7 +49,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(6,0,14,.88);
 .nav-links{display:flex;gap:28px;flex:1}
 .nav-links a{text-decoration:none;color:var(--muted);font-size:.92rem;font-weight:500;transition:color .2s}
 .nav-links a:hover{color:var(--text)}
-.nav-actions{display:flex;gap:10px;align-items:center;flex-shrink:0}
+.nav-actions{display:flex;gap:10px;align-items:center;flex-shrink:0;margin-left:auto}
 .nav-hamburger{display:none;background:none;border:none;cursor:pointer;padding:8px;line-height:0;color:var(--text)}
 /* Mobile menu */
 .mobile-menu{display:none;position:fixed;top:70px;left:0;right:0;bottom:0;z-index:199;background:rgba(6,0,14,.97);backdrop-filter:blur(20px);flex-direction:column;align-items:center;justify-content:center;gap:36px}
@@ -228,8 +228,8 @@ footer{background:rgba(0,0,0,.25);border-top:1px solid var(--border);padding:44p
 .form-success p{max-width:400px;margin:0 auto;font-size:.95rem}
 /* MOBILE */
 @media(max-width:900px){
-  .nav-links,.nav-actions .btn{display:none}
-  .nav-hamburger{display:block;margin-left:auto}
+  .nav-links,.nav-actions,.lang-switcher{display:none}
+  .nav-hamburger{display:block;margin-left:auto;flex-shrink:0}
   .hero-inner{grid-template-columns:1fr;text-align:center;gap:40px;padding:60px 24px}
   .hero-phones{order:-1}
   .hero-text>p{margin:0 auto 34px}
@@ -474,7 +474,7 @@ nav a[aria-current="page"]::after{content:'';position:absolute;bottom:-4px;left:
 .lang-btn:hover{color:rgba(255,255,255,.8);background:rgba(255,255,255,.08)}
 .lang-btn.active{background:var(--grad-purple);color:#fff;box-shadow:0 2px 8px rgba(127,7,248,.3)}
 .lang-btn:focus-visible{outline:2px solid var(--p1);outline-offset:2px}
-@media(max-width:900px){.lang-switcher{margin-right:8px}}
+/* lang-switcher hidden on mobile via main mobile rule */
 
 /* ═══ RTL SUPPORT ═══ */
 [dir="rtl"] body{font-family:-apple-system,"Segoe UI","Helvetica Neue",Arial,sans-serif}
@@ -521,6 +521,14 @@ nav a[aria-current="page"]::after{content:'';position:absolute;bottom:-4px;left:
 [dir="rtl"] .hero-text{text-align:right}
 [dir="rtl"] .phi-text{text-align:right}
 [dir="rtl"] .token-text{text-align:right}
+
+/* ═══ MOBILE MENU LANGUAGE ROW ═══ */
+.mob-lang-row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:8px}
+.mob-lang-btn{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.13);border-radius:12px;padding:11px 22px;font-size:1rem;font-weight:700;color:var(--text);cursor:pointer;font-family:inherit;display:flex;align-items:center;gap:8px;transition:all .2s;min-height:44px;letter-spacing:.03em}
+.mob-lang-btn:hover{background:rgba(127,7,248,.18);border-color:var(--p1)}
+.mob-lang-btn.active{background:var(--grad-purple);color:#fff;border-color:transparent;box-shadow:0 4px 18px rgba(127,7,248,.35)}
+.mob-lang-btn:focus-visible{outline:2px solid var(--p1);outline-offset:2px}
+.mob-lang-sep{width:100%;height:1px;background:rgba(255,255,255,.08);margin:4px 0}
 </style>
 </head>
 <body>
@@ -551,6 +559,12 @@ nav a[aria-current="page"]::after{content:'';position:absolute;bottom:-4px;left:
 <div class="mobile-menu" id="mobileMenu">
 <a href="#/creators" class="btn btn-gold" onclick="closeMenu()" style="font-size:1rem;padding:14px 32px" data-i18n="nav.crea">Je suis Créateur</a>
   <a href="#/businesses" class="btn btn-primary" onclick="closeMenu()" style="font-size:1rem;padding:14px 32px" data-i18n="nav.brand">Je suis une Marque</a>
+  <div class="mob-lang-sep"></div>
+  <div class="mob-lang-row" role="group" aria-label="Changer de langue">
+    <button class="mob-lang-btn" data-lang="fr" onclick="setLang('fr');closeMenu()">🇫🇷 FR</button>
+    <button class="mob-lang-btn" data-lang="ar" onclick="setLang('ar');closeMenu()">🇲🇦 AR</button>
+    <button class="mob-lang-btn" data-lang="en" onclick="setLang('en');closeMenu()">🇬🇧 EN</button>
+  </div>
 </div>
 
 <!-- ==================== PAGE: HOME ==================== -->
@@ -1944,7 +1958,7 @@ function setLang(lang) {
   document.documentElement.lang = lang;
   document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
   // active button state
-  document.querySelectorAll('.lang-btn').forEach(function(btn) {
+  document.querySelectorAll('.lang-btn,.mob-lang-btn').forEach(function(btn) {
     btn.classList.toggle('active', btn.dataset.lang === lang);
   });
   // persist
